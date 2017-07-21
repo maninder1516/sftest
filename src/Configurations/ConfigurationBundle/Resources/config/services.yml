@@ -1,0 +1,4 @@
+services:
+#    configuration.example:
+#        class: Configurations\ConfigurationBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

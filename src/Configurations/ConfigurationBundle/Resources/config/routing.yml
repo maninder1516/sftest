@@ -1,0 +1,8 @@
+configuration_homepage:
+    path:     /
+    defaults: { _controller: ConfigurationBundle:Default:index }
+
+email_template_settings:
+    path:     /email_template_settings
+    defaults: { _controller: ConfigurationBundle:Default:email_template_settings }
+    

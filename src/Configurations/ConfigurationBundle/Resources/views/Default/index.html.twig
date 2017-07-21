@@ -1,0 +1,149 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block body %}   
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Email Template Settings</h3>
+        </div>
+        <div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-sm-12" id="notificationmessage">
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success" role="alert">  
+                <span style="font-color:black">{{ flashMessage }}</span>
+            </div>
+        {% endfor %}
+
+        {% for flashMessage in app.session.flashbag.get('error') %}
+            <div class="alert alert-danger" role="alert">  
+                <span style="font-color:black">{{ flashMessage }}</span>
+            </div>
+        {% endfor %}      
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                {#<div class="x_title">
+                    <h2>Configure <small>Email Template Settings</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Settings 1</a>
+                                </li>
+                                <li><a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>#}
+                <div class="row">
+                    <form name="frm_email_settings"  id="frm_email_settings" method="post" enctype="multipart/form-data">  
+                        <div class="col-md-6 col-sm-6 col-xs-6">                       
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Logo </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">                                    
+                                    {% if eml_tpl_setting.logo == "" %}   
+                                    <input type="file" id="logo" name="logo" required="required" class="">                                         
+                                    {% else %}
+                                        <img class="img-responsive" src="{{ asset('uploads/files/'~eml_tpl_setting.logo) }}" alt="" />  
+                                        {{eml_tpl_setting.logo}}
+                                        {% endif %}
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Text color</label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <div class="input-group demo2">
+                                                {% if eml_tpl_setting.color == "" %}   
+                                                <input id="color" name="color" type="text" value="#e01ab5" class="form-control" />
+                                                {% else %}
+                                                    <input id="color" name="color" type="text" value="{{eml_tpl_setting.color}}" class="form-control" />
+                                                    {% endif %}
+                                                        <span class="input-group-addon"><i></i></span>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>                                  
+
+                                            <div class="form-group">
+                                                <label for="footer-text" class="control-label col-md-3 col-sm-3 col-xs-12">Footer text</label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    {% if eml_tpl_setting.footer_text == "" %}   
+                                                    <input id="footer-text" class="form-control col-md-7 col-xs-12" type="text" name="footer-text">
+                                                    {% else %}
+                                                        <input id="footer-text" class="form-control col-md-7 col-xs-12" type="text" name="footer-text" value="{{eml_tpl_setting.footer_text}}">
+                                                        {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="font-size">Font size </label>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            {% if eml_tpl_setting.font_size == "" %}
+                                                            <input type="text" id="font-size" name="font-size" required="required" class="form-control col-md-7 col-xs-12">
+                                                            {% else %}
+                                                                <input type="text" id="font-size" name="font-size" required="required" class="form-control col-md-7 col-xs-12" value="{{eml_tpl_setting.font_size}}">
+                                                                {% endif %}
+                                                                </div>
+                                                                <div class="clearfix"></div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="header-text" class="control-label col-md-3 col-sm-3 col-xs-12">Header text</label>
+                                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                    {% if eml_tpl_setting.header_text == "" %}
+                                                                    <input id="header-text" class="form-control col-md-7 col-xs-12" type="text" name="header-text">
+                                                                    {% else %}
+                                                                        <input id="header-text" class="form-control col-md-7 col-xs-12" type="text" name="header-text" value="{{eml_tpl_setting.header_text}}">
+                                                                        {% endif %}
+                                                                        </div>
+                                                                        <div class="clearfix"></div>
+                                                                    </div>                                                                            
+                                                                    <div class="form-group">
+                                                                        <label for="social-links" class="control-label col-md-3 col-sm-3 col-xs-12">Show social links</label>
+                                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                                            {% if eml_tpl_setting.show_social_links == 0 %}
+                                                                            <input id="social-links" name="social-links" type="checkbox" >
+                                                                            {% else %}
+                                                                                <input checked="checked" id="social-links" name="social-links" type="checkbox" >
+                                                                                {% endif %}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="clearfix"></div>
+                                                                        </div>
+
+                                                                        <div class="clearfix"></div><br/>
+                                                                        <div class="form-group">
+                                                                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                                                                <button type="button" class="btn btn-primary">Cancel</button>
+                                                                                <button type="submit" class="btn btn-success">Submit</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    {% endblock %}

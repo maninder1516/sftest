@@ -1,0 +1,8 @@
+users_homepage:
+    path:     /admin
+    defaults: { _controller: UsersBundle:Default:getLogin }
+
+
+users_login:
+    path:     /login
+    defaults: { _controller: UsersBundle:Default:postLogin }

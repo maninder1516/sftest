@@ -1,0 +1,11 @@
+configuration:
+    resource: "@ConfigurationBundle/Resources/config/routing.yml"
+    prefix:   /email_template_settings
+
+users:
+    resource: "@UsersBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
